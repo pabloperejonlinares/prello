@@ -6,6 +6,8 @@ async function loadTasks() {
   return data
 }
 
+export const revalidate = 5 // vuelve a refrescar el componente para evitar cacheos. MUY IMPORTANTE PARA PRODUCCIÓN
+
 export default async function MainPage() {
   const tasks = await loadTasks()
 
