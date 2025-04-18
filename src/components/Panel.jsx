@@ -13,8 +13,10 @@ export default function Panel(props) {
   const _renderTasksList = () => props.tasks.map(item => (
     <Task
       key={item.id}
+      id={item.id}
       title={item.title}
       description={item.description}
+      state={item.state}
     />))
 
   const createTask = async (e) => {
@@ -33,7 +35,7 @@ export default function Panel(props) {
   } 
 
   return (
-    <div className="flex flex-col gap-3 basis-1/5 h-[35rem] bg-blue-300">
+    <div className="flex flex-col gap-3 basis-1/5 min-h-[35rem] bg-blue-300 h-fit">
       <h2 className="font-bold text-center mt-3">{props.title}</h2>
       <div className="flex flex-col items-center gap-3">
         {_renderTasksList()}
