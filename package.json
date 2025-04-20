@@ -12,16 +12,17 @@
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
     "@prisma/client": "^5.6.0",
-    "framer-motion": "^10.16.16",
-    "next": "14.0.3",
-    "react": "^18",
-    "react-dom": "^18",
+    "framer-motion": "^12.7.4",
+    "motion": "^12.7.4",
+    "next": "^15.3.1",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "vercel": "^33.2.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
-    "eslint-config-next": "14.0.3",
+    "eslint-config-next": "^15.3.1",
     "postcss": "^8",
     "prisma": "^5.6.0",
     "tailwindcss": "^3.3.0"
