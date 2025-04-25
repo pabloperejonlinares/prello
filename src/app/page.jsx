@@ -1,5 +1,5 @@
-import Panel from "@/components/Panel"
 import { prisma } from "@/libs/prisma";
+import Dragable from "@/components/Dragrable";
 
 async function loadTasks() {
   const data = await prisma.task.findMany()
@@ -16,10 +16,10 @@ export default async function MainPage() {
   const doneTasks = tasks.filter(t => t.state === 'DONE')
 
   return (
-    <div className="flex items-center justify-evenly mt-14 max-w-screen-2xl">
-      <Panel title='TO DO' tasks={todoTasks}/>
-      <Panel title='IN PROGRESS' tasks={progressTasks}/>
-      <Panel title='DONE' tasks={doneTasks}/>
-    </div>
+    <Dragable
+      todoTasks={todoTasks}
+      progressTasks={progressTasks}
+      doneTasks={doneTasks}
+    />
   )
 }

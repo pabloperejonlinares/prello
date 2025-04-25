@@ -2,14 +2,12 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 
 export async function PUT(request, {params}) {
-  const { title, description, newState } = await request.json()
+  const { newState } = await request.json()
   const task = await prisma.task.update({
     where: {
       id: parseInt(params.id)
     },
     data: {
-      title: title,
-      description: description,
       state: newState
     }
   })
