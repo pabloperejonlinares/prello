@@ -10,6 +10,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "@nextui-org/react": "^2.2.9",
     "@prisma/client": "^5.6.0",
     "framer-motion": "^12.7.4",
