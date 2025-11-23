@@ -1,29 +1,29 @@
 'use client'
-import React, { useState } from 'react';
+import React, { JSX, useState } from 'react';
 import { useRouter } from "next/navigation"
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { Droppable, Draggable } from '@hello-pangea/dnd';
 import Task from "./Task"
 
-export default function Panel(props) {
+interface TaskItem {
+  id: string;
+  title: string;
+  description: string;
+  state?: string;
+}
+
+interface PanelProps {
+  title: string;
+  tasks: TaskItem[];
+}
+
+export default function Panel(props: PanelProps): JSX.Element {
   const router = useRouter()
   const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure()
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+  const [title, setTitle] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
 
-  const getItemStyle = (isDragging, draggableStyle) => ({
-    // change background colour if dragging
-    background: isDragging ? "lightgreen" : "grey",
-  
-    // styles we need to apply on draggables
-    ...draggableStyle
-  });
-
-  const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? "lightblue" : "lightgrey",
-  });
-
-  const createTask = async (e) => {
+  const createTask = async (e: React.SyntheticEvent) => {
     e.preventDefault() // para que no refresque automáticamente al darle al botón
     await fetch('/api/tasks', {
       method: 'POST',
@@ -42,32 +42,26 @@ export default function Panel(props) {
     <div className="flex flex-col gap-3 basis-1/5 min-h-[35rem] bg-blue-300 h-fit">
       <h2 className="font-bold text-center mt-3">{props.title}</h2>
         <Droppable droppableId={props.title}>
-        {(provided, snapshot) => (
+        {(provided: any, snapshot: any) => (
           <div
             ref={provided.innerRef}
             className="flex flex-col items-center gap-3"
-            // style={getListStyle(snapshot.isDraggingOver)}
             {...provided.droppableProps}
           >
-            {props.tasks.map((item, index) => (
+            {props.tasks.map((item: TaskItem, index: number) => (
               <Draggable
                 key={item.id}
                 draggableId={String(item.id)}
                 index={index}
               >
-                {(provided, snapshot) => (
+                {(provided: any, snapshot: any) => (
                   <div
                     ref={provided.innerRef}
                     className='flex flex-col items-center w-5/6 py-4 rounded shadow-md bg-white'
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    // style={getItemStyle(
-                    //   snapshot.isDragging,
-                    //   provided.draggableProps.style
-                    // )}
                   >
                     <Task
-                      ref={provided.innerRef}
                       key={item.id}
                       id={item.id}
                       title={item.title}
@@ -94,7 +88,7 @@ export default function Panel(props) {
                 <input id="title" type='text' placeholder="Título" value={title} onChange={(e) => setTitle(e.target.value)}
                   className="border border-gray-400 p-2 mb-4 w-full text-black"></input>
                 <label htmlFor="description" className="font-bold text-sm">Descripción de la tarea</label>
-                <textarea id="description" rows='3' placeholder="Descripción" value={description} onChange={(e) => setDescription(e.target.value)}
+                <textarea id="description" rows={3} placeholder="Descripción" value={description} onChange={(e) => setDescription(e.target.value)}
                   className="border border-gray-400 p-2 mb-4 w-full text-black"></textarea>
                 </ModalBody>
                 <ModalFooter>
