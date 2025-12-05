@@ -4,13 +4,7 @@ import { useRouter } from "next/navigation"
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { Droppable, Draggable } from '@hello-pangea/dnd';
 import Task from "./Task"
-
-interface TaskItem {
-  id: string;
-  title: string;
-  description: string;
-  state?: string;
-}
+import { TaskItem } from '@/types/task';
 
 interface PanelProps {
   title: string;

@@ -1,24 +1,15 @@
 'use client'
 import { useRouter } from "next/navigation"
 import type { JSX, MouseEvent } from 'react'
+import { TaskItem } from '@/types/task';
 
-export interface TaskFields {
-  id: string
-  title: string
-  description?: string
-  state: 'DONE' | 'TODO' | 'IN_PROGRESS' | string
-}
-
-export interface TaskProps extends TaskFields {}
-
-
-export default function Task(props: TaskProps): JSX.Element {
+export default function Task(props: TaskItem): JSX.Element {
   const router = useRouter()
-  const {title, description, state } = props
+  const { id, title, description, state } = props
 
   const deleteTask = async (e: MouseEvent<HTMLButtonElement>): Promise<void> => {
     e.preventDefault() // para que no refresque automáticamente al darle al botón
-    await fetch(`/api/tasks/${props.id}`, {
+    await fetch(`/api/tasks/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'

@@ -2,12 +2,20 @@
 import Panel from "./Panel"
 import { DragDropContext } from '@hello-pangea/dnd';
 import { useRouter } from "next/navigation"
+import type { DropResult } from '@hello-pangea/dnd';
+import { TaskItem } from '@/types/task';
 
-export default function Dragable(props) {
+interface DragableProps {
+  todoTasks: TaskItem[];
+  progressTasks: TaskItem[];
+  doneTasks: TaskItem[];
+}
+
+export default function Dragable(props: DragableProps) {
   const { todoTasks, progressTasks, doneTasks } = props
   const router = useRouter()
 
-  const moveTask = async (result) => {
+  const moveTask = async (result: DropResult) => {
     const { destination } = result;
 
     if (!destination) {
