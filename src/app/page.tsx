@@ -11,9 +11,9 @@ export const revalidate = 0 // vuelve a refrescar el componente para evitar cach
 export default async function MainPage() {
   const tasks = await loadTasks()
 
-  const todoTasks = tasks.filter(t => t.state === 'TO DO')
-  const progressTasks = tasks.filter(t => t.state === 'IN PROGRESS')
-  const doneTasks = tasks.filter(t => t.state === 'DONE')
+  const todoTasks = tasks.filter((t: { state: string; }) => t.state === 'TO DO')
+  const progressTasks = tasks.filter((t: { state: string; }) => t.state === 'IN PROGRESS')
+  const doneTasks = tasks.filter((t: { state: string; }) => t.state === 'DONE')
 
   return (
     <Dragable

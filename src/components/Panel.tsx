@@ -1,7 +1,7 @@
 'use client'
-import React, { JSX, useState } from 'react';
+import { JSX, useState } from 'react';
 import { useRouter } from "next/navigation"
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@heroui/react";
 import { Droppable, Draggable } from '@hello-pangea/dnd';
 import Task from "./Task"
 import { TaskItem } from '@/types/task';
@@ -17,8 +17,7 @@ export default function Panel(props: PanelProps): JSX.Element {
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
 
-  const createTask = async (e: React.SyntheticEvent) => {
-    e.preventDefault() // para que no refresque automáticamente al darle al botón
+  const createTask = async () => {
     await fetch('/api/tasks', {
       method: 'POST',
       body: JSON.stringify({title, description}),
@@ -71,34 +70,34 @@ export default function Panel(props: PanelProps): JSX.Element {
         </Droppable>
         {props.title === 'TO DO'
           ? <div className="flex flex-col items-center w-5/6 py-4 rounded shadow-md bg-white self-center">
-          <button className="font-semibold" onClick={onOpen}>New Task</button>
+          <Button className="font-semibold" onPress={onOpen}>New Task</Button>
           <Modal size={'3xl'} isOpen={isOpen} onOpenChange={onOpenChange}>
-          <ModalContent>
-            {(onClose) => (
-              <>
-                <ModalHeader className="flex flex-col gap-1">New Task</ModalHeader>
-                <ModalBody>
-                <label htmlFor="title" className="font-bold text-sm">Título de la tarea</label>
-                <input id="title" type='text' placeholder="Título" value={title} onChange={(e) => setTitle(e.target.value)}
-                  className="border border-gray-400 p-2 mb-4 w-full text-black"></input>
-                <label htmlFor="description" className="font-bold text-sm">Descripción de la tarea</label>
-                <textarea id="description" rows={3} placeholder="Descripción" value={description} onChange={(e) => setDescription(e.target.value)}
-                  className="border border-gray-400 p-2 mb-4 w-full text-black"></textarea>
-                </ModalBody>
-                <ModalFooter>
-                  <Button color="danger" variant="light" onPress={onClose}>
-                    Close
-                  </Button>
-                  <Button color="primary" onClick={createTask}>
-                    Create
-                  </Button>
-                </ModalFooter>
-              </>
-            )}
-          </ModalContent>
-        </Modal>
+            <ModalContent>
+              {(onClose) => (
+                <>
+                  <ModalHeader className="flex flex-col gap-1">New Task</ModalHeader>
+                  <ModalBody>
+                  <label htmlFor="title" className="font-bold text-sm">Título de la tarea</label>
+                  <input id="title" type='text' placeholder="Título" value={title} onChange={(e) => setTitle(e.target.value)}
+                    className="border border-gray-400 p-2 mb-4 w-full text-black"></input>
+                  <label htmlFor="description" className="font-bold text-sm">Descripción de la tarea</label>
+                  <textarea id="description" rows={3} placeholder="Descripción" value={description} onChange={(e) => setDescription(e.target.value)}
+                    className="border border-gray-400 p-2 mb-4 w-full text-black"></textarea>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button color="danger" variant="light" onPress={onClose}>
+                      Close
+                    </Button>
+                    <Button color="primary" onPress={createTask}>
+                      Create
+                    </Button>
+                  </ModalFooter>
+                </>
+              )}
+            </ModalContent>
+          </Modal>
         </div>
-        : null}
+      : null}
     </div>
   )
 }

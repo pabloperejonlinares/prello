@@ -3,9 +3,10 @@ import { prisma } from "@/libs/prisma";
 
 export async function PUT(request, {params}) {
   const { newState } = await request.json()
+  const { id } = await params
   const task = await prisma.task.update({
     where: {
-      id: parseInt(params.id)
+      id: parseInt(id)
     },
     data: {
       state: newState
@@ -15,10 +16,11 @@ export async function PUT(request, {params}) {
 }
 
 export async function DELETE(request, {params}) {
+  const { id } = await params
   try {
     const task = await prisma.task.delete({
       where: {
-        id: parseInt(params.id)
+        id: parseInt(id)
       }
     })
     return NextResponse.json(task)
