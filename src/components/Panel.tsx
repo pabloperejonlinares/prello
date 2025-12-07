@@ -1,9 +1,10 @@
 'use client'
-import { JSX, useState } from 'react';
+import { JSX, useState, useTransition } from 'react';
 import { useRouter } from "next/navigation"
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@heroui/react";
+import { Card, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@heroui/react";
 import { Droppable, Draggable } from '@hello-pangea/dnd';
 import Task from "./Task"
+import PanelSkeleton from './Skeleton';
 import { TaskItem } from '@/types/task';
 
 interface PanelProps {
@@ -13,9 +14,10 @@ interface PanelProps {
 
 export default function Panel(props: PanelProps): JSX.Element {
   const router = useRouter()
-  const {isOpen, onOpen, onClose, onOpenChange} = useDisclosure()
-  const [title, setTitle] = useState<string>('')
-  const [description, setDescription] = useState<string>('')
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
+  const [ title, setTitle ] = useState<string>('')
+  const [ description, setDescription ] = useState<string>('')
+  const [ isPending, startTransition ] = useTransition()
 
   const createTask = async () => {
     await fetch('/api/tasks', {
@@ -28,11 +30,10 @@ export default function Panel(props: PanelProps): JSX.Element {
 
     router.refresh() // refrescar la página para evitar datos cacheados
     onClose() // cerrar el modal
-  
   } 
 
   return (
-    <div className="flex flex-col gap-3 basis-1/5 min-h-[35rem] bg-blue-300 h-fit">
+    <Card className="flex flex-col gap-3 basis-1/5 min-h-[35rem] bg-blue-300 h-fit">
       <h2 className="font-bold text-center mt-3">{props.title}</h2>
         <Droppable droppableId={props.title}>
         {(provided: any, snapshot: any) => (
@@ -50,7 +51,7 @@ export default function Panel(props: PanelProps): JSX.Element {
                 {(provided: any, snapshot: any) => (
                   <div
                     ref={provided.innerRef}
-                    className='flex flex-col items-center w-5/6 py-4 rounded shadow-md bg-white'
+                    className='flex flex-col items-center w-5/6 py-4 px-4 rounded-lg shadow-md bg-white'
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
@@ -69,7 +70,7 @@ export default function Panel(props: PanelProps): JSX.Element {
         )}
         </Droppable>
         {props.title === 'TO DO'
-          ? <div className="flex flex-col items-center w-5/6 py-4 rounded shadow-md bg-white self-center">
+          ? <div className="flex flex-col items-center w-5/6 py-4 rounded-lg shadow-md bg-white self-center">
           <Button className="font-semibold" onPress={onOpen}>New Task</Button>
           <Modal size={'3xl'} isOpen={isOpen} onOpenChange={onOpenChange}>
             <ModalContent>
@@ -77,10 +78,10 @@ export default function Panel(props: PanelProps): JSX.Element {
                 <>
                   <ModalHeader className="flex flex-col gap-1">New Task</ModalHeader>
                   <ModalBody>
-                  <label htmlFor="title" className="font-bold text-sm">Título de la tarea</label>
+                  <label htmlFor="title" className="font-bold text-sm">Task title</label>
                   <input id="title" type='text' placeholder="Título" value={title} onChange={(e) => setTitle(e.target.value)}
                     className="border border-gray-400 p-2 mb-4 w-full text-black"></input>
-                  <label htmlFor="description" className="font-bold text-sm">Descripción de la tarea</label>
+                  <label htmlFor="description" className="font-bold text-sm">Task description</label>
                   <textarea id="description" rows={3} placeholder="Descripción" value={description} onChange={(e) => setDescription(e.target.value)}
                     className="border border-gray-400 p-2 mb-4 w-full text-black"></textarea>
                   </ModalBody>
@@ -88,7 +89,11 @@ export default function Panel(props: PanelProps): JSX.Element {
                     <Button color="danger" variant="light" onPress={onClose}>
                       Close
                     </Button>
-                    <Button color="primary" onPress={createTask}>
+                    <Button isLoading={isPending} color="primary" onPress={() => {
+                      startTransition(async () => {
+                        await createTask()
+                      })
+                    }}>
                       Create
                     </Button>
                   </ModalFooter>
@@ -98,6 +103,6 @@ export default function Panel(props: PanelProps): JSX.Element {
           </Modal>
         </div>
       : null}
-    </div>
+    </Card>
   )
 }

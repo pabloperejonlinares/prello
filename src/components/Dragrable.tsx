@@ -1,9 +1,10 @@
 'use client'
+import { useTransition } from 'react';
 import Panel from "./Panel"
-import { DragDropContext } from '@hello-pangea/dnd';
+import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { useRouter } from "next/navigation"
-import type { DropResult } from '@hello-pangea/dnd';
 import { TaskItem } from '@/types/task';
+import PanelSkeleton from './Skeleton';
 
 interface DragableProps {
   todoTasks: TaskItem[];
@@ -13,6 +14,7 @@ interface DragableProps {
 
 export default function Dragable(props: DragableProps) {
   const { todoTasks, progressTasks, doneTasks } = props
+  const [ isPending, startTransition ] = useTransition()
   const router = useRouter()
 
   const moveTask = async (result: DropResult) => {
@@ -35,10 +37,21 @@ export default function Dragable(props: DragableProps) {
 
   return (
     <div className="flex items-center justify-evenly mt-14 max-w-screen-2xl">
-      <DragDropContext onDragEnd={moveTask}>
-        <Panel title='TO DO' tasks={todoTasks}/>
-        <Panel title='IN PROGRESS' tasks={progressTasks}/>
-        <Panel title='DONE' tasks={doneTasks}/>
+      <DragDropContext onDragEnd={(result) => {
+        startTransition(async () => {
+          await moveTask(result)
+        })
+      }}>
+        {isPending ? <>
+          <PanelSkeleton title='TO DO' tasks={todoTasks.length}/>
+          <PanelSkeleton title='IN PROGRESS' tasks={progressTasks.length}/>
+          <PanelSkeleton title='DONE' tasks={doneTasks.length}/>
+        </>
+        : <>
+          <Panel title='TO DO' tasks={todoTasks}/>
+          <Panel title='IN PROGRESS' tasks={progressTasks}/>
+          <Panel title='DONE' tasks={doneTasks}/>
+        </>}
       </DragDropContext>
     </div>
   )
