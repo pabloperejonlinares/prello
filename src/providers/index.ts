@@ -1,1 +1,1 @@
-export * from './HerouiProvider'
+export * from './herouiProvider'
