@@ -7,25 +7,30 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "pnpm exec prisma generate"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
-    "@nextui-org/react": "^2.2.9",
-    "@prisma/client": "^5.6.0",
-    "framer-motion": "^12.7.4",
-    "motion": "^12.7.4",
-    "next": "^15.3.1",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "vercel": "^33.2.0"
+    "@heroui/react": "^2.8.5",
+    "@prisma/client": "6.19.0",
+    "@react-types/shared": "^3.32.1",
+    "framer-motion": "^12.23.24",
+    "grommet-icons": "^4.14.0",
+    "motion": "^12.23.24",
+    "next": "^16.0.7",
+    "react": "19.2.1",
+    "react-dom": "19.2.1",
+    "vercel": "^33.7.1"
   },
   "devDependencies": {
-    "autoprefixer": "^10.0.1",
-    "eslint": "^8",
-    "eslint-config-next": "^15.3.1",
-    "postcss": "^8",
-    "prisma": "^5.6.0",
-    "tailwindcss": "^3.3.0"
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "autoprefixer": "^10.4.22",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "^15.5.6",
+    "postcss": "^8.5.6",
+    "prisma": "^6.19.0",
+    "tailwindcss": "^3.4.18",
+    "typescript": "^5.9.3"
   }
 }
