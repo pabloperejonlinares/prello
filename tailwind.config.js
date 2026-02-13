@@ -17,6 +17,6 @@ module.exports = {
       },
     },
   },
-  darkMode: "class",
+  darkMode: "class", // Solo se activa con clase .dark; al no usarla, siempre es modo claro
   plugins: [heroui()],
 }

@@ -1,64 +1,79 @@
 'use client'
 import { useRouter } from "next/navigation"
 import type { JSX, MouseEvent } from 'react'
-import { useRef, useTransition } from 'react';
+import { useState, useTransition, useEffect } from 'react';
 import { TaskItem } from '@/types/task';
 import { Trash, Edit } from 'grommet-icons';
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@heroui/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Textarea, useDisclosure } from "@heroui/react";
 
 export default function Task(props: TaskItem): JSX.Element {
   const router = useRouter()
   const { id, title, description, state } = props
   const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
   const [ isPending, startTransition ] = useTransition()
-  const titleRef = useRef<HTMLInputElement>(null);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const [ editTitle, setEditTitle ] = useState(title)
+  const [ editDescription, setEditDescription ] = useState(description)
+
+  useEffect(() => {
+    if (isOpen) {
+      setEditTitle(title)
+      setEditDescription(description)
+    }
+  }, [isOpen, title, description])
 
   const deleteTask = async (e: MouseEvent<HTMLButtonElement>): Promise<void> => {
-    e.preventDefault() // para que no refresque automáticamente al darle al botón
+    e.preventDefault()
     await fetch(`/api/tasks/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
       }
     })
-    router.refresh() // refrescar la página para evitar datos cacheados
+    router.refresh()
   }
 
   const editTask = async () => {
-    const title = titleRef.current?.value;
-    const description = descriptionRef.current?.value;
     await fetch(`/api/tasks/${id}`, {
       method: 'PUT',
-      body: JSON.stringify({title, description, state}),
+      body: JSON.stringify({ title: editTitle, description: editDescription, state }),
       headers: {
         'Content-Type': 'application/json'
       }
     })
 
-    router.refresh() // refrescar la página para evitar datos cacheados
-    onClose() // cerrar el modal
+    router.refresh()
+    onClose()
   } 
 
   return (
       <>
-        <h3 className="font-semibold">{title}</h3>
-        <p className="text-xs">{description}</p>
+        <h3 className="font-semibold text-foreground">{title}</h3>
+        <p className="text-xs text-default-500">{description}</p>
         {state === 'DONE'
-          ? <Trash className='cursor-pointer place-self-end' onClick={deleteTask} size="small" color='red'/>
-          : <Edit onClick={onOpen} className='cursor-pointer place-self-end' size="small"/>}
+          ? <span className="inline-block place-self-end [&_svg]:size-3 [&_svg]:shrink-0"><Trash className="cursor-pointer text-danger" onClick={deleteTask} size="small" /></span>
+          : <span className="inline-block place-self-end [&_svg]:size-3 [&_svg]:shrink-0"><Edit onClick={onOpen} className="cursor-pointer text-default-500" size="small" /></span>}
         <Modal size={'3xl'} isOpen={isOpen} onOpenChange={onOpenChange}>
           <ModalContent>
             {(onClose) => (
               <>
                 <ModalHeader className="flex flex-col gap-1">Edit task</ModalHeader>
                 <ModalBody>
-                <label htmlFor="title" className="font-bold text-sm">Task title</label>
-                <input ref={titleRef} id="title" type='text' placeholder="Título" defaultValue={title}
-                  className="border border-gray-400 p-2 mb-4 w-full text-black"></input>
-                <label htmlFor="description" className="font-bold text-sm">Task description</label>
-                <textarea ref={descriptionRef} id="description" rows={3} placeholder="Descripción" defaultValue={description}
-                  className="border border-gray-400 p-2 mb-4 w-full text-black"></textarea>
+                <Input
+                  label="Task title"
+                  placeholder="Título"
+                  value={editTitle}
+                  onValueChange={setEditTitle}
+                  variant="bordered"
+                  className="mb-4"
+                />
+                <Textarea
+                  label="Task description"
+                  placeholder="Descripción"
+                  value={editDescription}
+                  onValueChange={setEditDescription}
+                  variant="bordered"
+                  minRows={3}
+                />
                 </ModalBody>
                 <ModalFooter>
                   <Button color="danger" variant="light" onPress={onClose}>
