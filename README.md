@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Prello
 
-## Getting Started
+Proyecto [Next.js](https://nextjs.org/) (estilo Trello) con Prisma y PostgreSQL.
 
-First, run the development server:
+## Cómo iniciar la aplicación desde cero
+
+Si acabas de descargar o clonar el código, sigue estos pasos:
+
+### 1. Requisitos previos
+
+- **Node.js** 18+ ([nodejs.org](https://nodejs.org/))
+- **pnpm** ([pnpm.io](https://pnpm.io/)) — instalación: `npm install -g pnpm`
+- **PostgreSQL** en ejecución (local o servicio en la nube)
+
+### 2. Instalar dependencias
+
+En la raíz del proyecto:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Con esto se instalan las dependencias y se ejecuta `prisma generate` automáticamente (postinstall).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 3. Configurar la base de datos
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Crea un archivo `.env` en la raíz del proyecto con las variables de PostgreSQL:
 
-## Learn More
+```env
+POSTGRES_PRISMA_URL="postgresql://usuario:contraseña@host:5432/prello?pgbouncer=true"
+POSTGRES_URL_NON_POOLING="postgresql://usuario:contraseña@host:5432/prello"
+```
 
-To learn more about Next.js, take a look at the following resources:
+Sustituye `usuario`, `contraseña`, `host` y el nombre de la base de datos (`prello`) por los de tu entorno. Si usas PostgreSQL local sin pooling, puedes usar la misma URL en ambas variables (sin `?pgbouncer=true`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 4. Crear y aplicar las migraciones
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Crea la base de datos si no existe y aplica el esquema:
 
-## Deploy on Vercel
+```bash
+pnpm exec prisma migrate deploy
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+O, en desarrollo, para sincronizar el esquema sin migraciones:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+pnpm exec prisma db push
+```
+
+### 5. Arrancar la aplicación
+
+Servidor de desarrollo:
+
+```bash
+pnpm dev
+```
+
+Abre [http://localhost:3000](http://localhost:3000) en el navegador.
+
+Para producción (tras hacer build):
+
+```bash
+pnpm build
+pnpm start
+```
+
+---
+
+## Scripts disponibles
+
+| Comando        | Descripción              |
+|----------------|--------------------------|
+| `pnpm dev`     | Servidor de desarrollo   |
+| `pnpm build`   | Build de producción      |
+| `pnpm start`   | Servidor de producción   |
+| `pnpm lint`    | Ejecutar ESLint          |
+
+## Más información
+
+- [Documentación de Next.js](https://nextjs.org/docs)
+- [Documentación de Prisma](https://www.prisma.io/docs)

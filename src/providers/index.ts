@@ -1,1 +1,2 @@
-export * from './herouiProvider'
+export * from './HerouiProvider'
+export * from './AuthContext'
