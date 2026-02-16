@@ -3,15 +3,21 @@
 import { Card, CardBody, CardHeader, Button, Input } from '@heroui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '@/providers/AuthContext'
 
 export default function LoginPage() {
   const router = useRouter()
-  const { login } = useAuth()
+  const { login, user, isReady } = useAuth()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    if (isReady && user) {
+      router.replace('/')
+    }
+  }, [isReady, user, router])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -22,6 +28,14 @@ export default function LoginPage() {
     } else {
       setError('Usuario o contraseña incorrectos')
     }
+  }
+
+  if (isReady && user) {
+    return (
+      <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4">
+        <p className="text-default-500">Redirigiendo...</p>
+      </div>
+    )
   }
 
   return (

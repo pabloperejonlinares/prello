@@ -1,8 +1,8 @@
 import { Inter } from 'next/font/google'
-import Navbar from '@/components/Navbar'
+import { Navbar } from '@/components'
 import { HerouiProvider } from '@/providers'
 import { AuthProvider } from '@/providers/AuthContext'
-import '../styles/globals.css'
+import '../styles/globals.scss'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,8 +13,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} h-screen min-h-screen bg-zinc-50 text-zinc-900`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} h-screen min-h-screen bg-pastel-page text-pastel-text antialiased bg-fixed`}>
         <HerouiProvider>
           <AuthProvider>
             <Navbar />

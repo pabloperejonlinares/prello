@@ -8,6 +8,7 @@
 
 # testing
 /coverage
+.husky
 
 # next.js
 /.next/
@@ -37,3 +38,6 @@ next-env.d.ts
 
 # cursor
 .cursor
+
+# Prisma 7 generated client (generado con: pnpm exec prisma generate)
+/src/generated
