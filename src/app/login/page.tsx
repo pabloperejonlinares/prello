@@ -1,7 +1,6 @@
 'use client'
 
 import { Card, CardBody, CardHeader, Button, Input } from '@heroui/react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { useAuth } from '@/providers/AuthContext'
@@ -26,14 +25,14 @@ export default function LoginPage() {
       router.push('/')
       router.refresh()
     } else {
-      setError('Usuario o contraseña incorrectos')
+      setError('Incorrect username or password')
     }
   }
 
   if (isReady && user) {
     return (
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4">
-        <p className="text-default-500">Redirigiendo...</p>
+        <p className="text-default-500">Redirecting...</p>
       </div>
     )
   }
@@ -42,16 +41,16 @@ export default function LoginPage() {
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4">
       <Card className="w-full max-w-md" shadow="md" radius="lg">
         <CardHeader className="flex flex-col gap-1 px-6 pt-6 pb-0">
-          <h1 className="text-xl font-bold">Iniciar sesión</h1>
+          <h1 className="text-xl font-bold">Log in</h1>
           <p className="text-sm text-default-500">
-            Introduce tus credenciales para acceder
+            Enter your credentials to access
           </p>
         </CardHeader>
         <CardBody className="gap-4 px-6 pb-6 pt-4">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <Input
-              label="Usuario"
-              placeholder="Usuario"
+              label="Username"
+              placeholder="Username"
               value={username}
               onValueChange={setUsername}
               isRequired
@@ -59,8 +58,8 @@ export default function LoginPage() {
               variant="bordered"
             />
             <Input
-              label="Contraseña"
-              placeholder="Contraseña"
+              label="Password"
+              placeholder="Password"
               type="password"
               value={password}
               onValueChange={setPassword}
@@ -72,15 +71,9 @@ export default function LoginPage() {
               <p className="text-sm text-danger">{error}</p>
             )}
             <Button type="submit" color="primary" className="font-semibold">
-              Entrar
+              Log in
             </Button>
           </form>
-          <p className="text-center text-small text-default-400">
-            ¿No tienes cuenta?{' '}
-            <Link href="/" className="text-primary hover:underline">
-              Volver al inicio
-            </Link>
-          </p>
         </CardBody>
       </Card>
     </div>
