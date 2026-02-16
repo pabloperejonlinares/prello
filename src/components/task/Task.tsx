@@ -57,7 +57,7 @@ export function Task(props: TaskItem): JSX.Element {
                 <ModalBody>
                 <Input
                   label="Task title"
-                  placeholder="Título"
+                  placeholder="Title"
                   value={editTitle}
                   onValueChange={setEditTitle}
                   variant="bordered"
@@ -65,7 +65,7 @@ export function Task(props: TaskItem): JSX.Element {
                 />
                 <Textarea
                   label="Task description"
-                  placeholder="Descripción"
+                  placeholder="Description"
                   value={editDescription}
                   onValueChange={setEditDescription}
                   variant="bordered"

@@ -68,7 +68,7 @@ export function Panel(props: PanelProps): JSX.Element {
                     <ModalBody>
                     <Input
                       label='Task title'
-                      placeholder='Título'
+                      placeholder='Title'
                       value={title}
                       onValueChange={setTitle}
                       variant='bordered'
@@ -76,7 +76,7 @@ export function Panel(props: PanelProps): JSX.Element {
                     />
                     <Textarea
                       label='Task description'
-                      placeholder='Descripción'
+                      placeholder='Description'
                       value={description}
                       onValueChange={setDescription}
                       variant='bordered'
