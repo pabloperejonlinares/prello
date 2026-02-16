@@ -14,9 +14,9 @@ describe('PanelSkeleton', () => {
     expect(screen.getByRole('heading', { name: 'TO DO' })).toBeInTheDocument();
   });
 
-  it('always renders 3 skeleton placeholders per panel', () => {
+  it('renders 3 task placeholders with 3 skeleton lines each (9 skeletons per panel)', () => {
     render(<PanelSkeleton title="DONE" />);
     const skeletons = screen.getAllByTestId('skeleton');
-    expect(skeletons).toHaveLength(3);
+    expect(skeletons).toHaveLength(9);
   });
 });

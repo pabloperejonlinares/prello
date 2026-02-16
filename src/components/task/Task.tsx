@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import type { JSX } from 'react'
 import { useState, useTransition, useEffect } from 'react';
-import { TaskItem } from '@/types/Task';
+import { TaskItem } from '@/types';
 import { Trash, Edit } from 'grommet-icons';
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Textarea, useDisclosure } from "@heroui/react";
 import { deleteTaskService, updateTaskService } from '@/services';

@@ -5,7 +5,7 @@ import { Panel, PanelSkeleton } from '@/components';
 import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/adapter';
 import { LayoutGroup } from 'framer-motion';
 import { useRouter } from "next/navigation"
-import { TaskItem } from '@/types/Task';
+import { TaskItem } from '@/types';
 
 interface DraggableProps {
   todoTasks: TaskItem[];
