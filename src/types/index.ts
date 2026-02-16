@@ -1,1 +1,1 @@
-export * from './Task'
+export type { TaskItem } from './Task'
