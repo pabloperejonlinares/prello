@@ -1,4 +1,4 @@
-export interface TaskItem {
+export type TaskItem = {
   id: number;
   title: string;
   description: string;

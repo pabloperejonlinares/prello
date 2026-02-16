@@ -1,0 +1,41 @@
+// Tema de Tailwind v4 — Paleta pastel elegante
+// https://tailwindcss.com/docs/configuration
+
+@theme {
+  // Colores pastel del tema
+  --color-pastel-cream: #fefcf9;
+  --color-pastel-lavender: #e8e4f3;
+  --color-pastel-mint: #e0f2ed;
+  --color-pastel-peach: #fce8e4;
+  --color-pastel-sky: #dbeafe;
+  --color-pastel-border: #e2dcef;
+  --color-pastel-text: #3d3748;
+  --color-pastel-muted: #6b6378;
+  --color-pastel-todo: #a78bfa;
+  --color-pastel-progress: #7dd3fc;
+  --color-pastel-done: #6ee7b7;
+
+  // Gradientes
+  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
+  --background-image-gradient-conic: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--tw-gradient-stops)
+  );
+  --background-image-pastel-page: linear-gradient(
+    135deg,
+    #f5f0ff 0%,
+    #fefcf9 35%,
+    #f0fdf9 70%,
+    #fef3f0 100%
+  );
+  --background-image-pastel-card: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(254, 252, 249, 0.98) 100%
+  );
+  --background-image-pastel-nav: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.85) 0%,
+    rgba(248, 246, 252, 0.9) 100%
+  );
+}

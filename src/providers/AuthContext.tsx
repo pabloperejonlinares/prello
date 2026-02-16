@@ -15,13 +15,14 @@ export type AuthUser = { username: string }
 
 type AuthContextValue = {
   user: AuthUser | null
+  isReady: boolean
   login: (username: string, password: string) => boolean
   logout: () => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
-const MOCK_USER = 'Pablo'
+const MOCK_USER = 'Admin'
 const MOCK_PASSWORD = '1234'
 
 function getStoredUser(): AuthUser | null {
@@ -47,9 +48,11 @@ function setStoredUser(user: AuthUser | null) {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null)
+  const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
     setUser(getStoredUser())
+    setIsReady(true)
   }, [])
 
   const login = useCallback((username: string, password: string): boolean => {
@@ -67,7 +70,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setStoredUser(null)
   }, [])
 
-  const value: AuthContextValue = { user, login, logout }
+  const value: AuthContextValue = { user, isReady, login, logout }
 
   return (
     <AuthContext.Provider value={value}>
