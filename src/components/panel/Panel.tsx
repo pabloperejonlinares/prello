@@ -8,7 +8,7 @@ import { TaskItem } from '@/types';
 import { createTaskService } from '@/services';
 import { DraggableTask } from '@/components';
 
-interface PanelProps {
+type PanelProps = {
   title: string;
   tasks: TaskItem[];
   noOpDropTaskId?: number | null;

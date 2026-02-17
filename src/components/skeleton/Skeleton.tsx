@@ -5,7 +5,7 @@ import { Card, CardHeader, Skeleton } from '@heroui/react';
 
 const SKELETON_TASKS_COUNT = 3;
 
-interface PanelSkeletonProps {
+type PanelSkeletonProps = {
   title: string;
 }
 
