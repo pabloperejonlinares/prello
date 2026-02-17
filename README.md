@@ -1,63 +1,82 @@
 # Prello
 
-Proyecto [Next.js](https://nextjs.org/) (estilo Trello) con Prisma y PostgreSQL.
+Trello-style project built with Next.js: boards, columns, and tasks with drag & drop.
 
-## Cómo iniciar la aplicación desde cero
+## Technologies
 
-Si acabas de descargar o clonar el código, sigue estos pasos:
+| Area | Technology |
+|------|------------|
+| **Framework** | [Next.js](https://nextjs.org/) 16 (App Router) |
+| **UI** | [React](https://react.dev/) 19 |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) |
+| **Database** | [PostgreSQL](https://www.postgresql.org/) + [Prisma](https://www.prisma.io/) (ORM) |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com/) 4, [Sass](https://sass-lang.com/), [HeroUI](https://www.heroui.com/) (NextUI) |
+| **Animations** | [Framer Motion](https://www.framer.com/motion/) |
+| **Drag & drop** | [@atlaskit/pragmatic-drag-and-drop](https://atlassian.design/components/pragmatic-drag-and-drop/about) |
+| **Testing** | [Jest](https://jestjs.io/), [Testing Library](https://testing-library.com/react) |
+| **Linting** | ESLint + eslint-config-next |
+| **Git hooks** | [Husky](https://typicode.github.io/husky/) |
+| **Deploy** | [Vercel](https://vercel.com/) |
 
-### 1. Requisitos previos
+---
+
+## How to run the app locally
+
+### 1. Prerequisites
 
 - **Node.js** 18+ ([nodejs.org](https://nodejs.org/))
-- **pnpm** ([pnpm.io](https://pnpm.io/)) — instalación: `npm install -g pnpm`
-- **PostgreSQL** en ejecución (local o servicio en la nube)
+- **pnpm** ([pnpm.io](https://pnpm.io/)) — install: `npm install -g pnpm`
+- **PostgreSQL** running (local or cloud)
 
-### 2. Instalar dependencias
+### 2. Clone and install dependencies
 
-En la raíz del proyecto:
+From the project root:
 
 ```bash
 pnpm install
 ```
 
-Con esto se instalan las dependencias y se ejecuta `prisma generate` automáticamente (postinstall).
+This installs dependencies and runs `prisma generate` automatically (via the `postinstall` script).
 
-### 3. Configurar la base de datos
+### 3. Configure the database
 
-Crea un archivo `.env` en la raíz del proyecto con las variables de PostgreSQL:
+Create a `.env` file in the project root with your PostgreSQL variables:
 
 ```env
-POSTGRES_PRISMA_URL="postgresql://usuario:contraseña@host:5432/prello?pgbouncer=true"
-POSTGRES_URL_NON_POOLING="postgresql://usuario:contraseña@host:5432/prello"
+POSTGRES_PRISMA_URL="postgresql://user:password@host:5432/prello?pgbouncer=true"
+POSTGRES_URL_NON_POOLING="postgresql://user:password@host:5432/prello"
 ```
 
-Sustituye `usuario`, `contraseña`, `host` y el nombre de la base de datos (`prello`) por los de tu entorno. Si usas PostgreSQL local sin pooling, puedes usar la misma URL en ambas variables (sin `?pgbouncer=true`).
+Replace `user`, `password`, `host`, and the database name (`prello`) with your own values.
 
-### 4. Crear y aplicar las migraciones
+- For local PostgreSQL without pooling, you can use the same URL for both variables (without `?pgbouncer=true`).
+- Create the database if it doesn’t exist, e.g.: `createdb prello`.
 
-Crea la base de datos si no existe y aplica el esquema:
+### 4. Apply the database schema
+
+To run migrations (recommended for production):
 
 ```bash
 pnpm exec prisma migrate deploy
 ```
 
-O, en desarrollo, para sincronizar el esquema sin migraciones:
+For development, to sync the schema without migrations:
 
 ```bash
 pnpm exec prisma db push
 ```
 
-### 5. Arrancar la aplicación
+### 5. Start the app
 
-Servidor de desarrollo:
+Development server:
 
 ```bash
 pnpm dev
 ```
 
-Abre [http://localhost:3000](http://localhost:3000) en el navegador.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Para producción (tras hacer build):
+For production (after building):
 
 ```bash
 pnpm build
@@ -66,16 +85,20 @@ pnpm start
 
 ---
 
-## Scripts disponibles
+## Available scripts
 
-| Comando        | Descripción              |
-|----------------|--------------------------|
-| `pnpm dev`     | Servidor de desarrollo   |
-| `pnpm build`   | Build de producción      |
-| `pnpm start`   | Servidor de producción   |
-| `pnpm lint`    | Ejecutar ESLint          |
+| Command       | Description              |
+|---------------|--------------------------|
+| `pnpm dev`    | Development server       |
+| `pnpm build`  | Production build         |
+| `pnpm start`  | Production server        |
+| `pnpm lint`   | Run ESLint               |
+| `pnpm test`   | Run tests with Jest      |
 
-## Más información
+---
 
-- [Documentación de Next.js](https://nextjs.org/docs)
-- [Documentación de Prisma](https://www.prisma.io/docs)
+## Further reading
+
+- [Next.js documentation](https://nextjs.org/docs)
+- [Prisma documentation](https://www.prisma.io/docs)
+- [HeroUI documentation](https://www.heroui.com/docs)
