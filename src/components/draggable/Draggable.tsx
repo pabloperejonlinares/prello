@@ -6,6 +6,7 @@ import { monitorForElements } from '@atlaskit/pragmatic-drag-and-drop/element/ad
 import { LayoutGroup } from 'framer-motion';
 import { useRouter } from "next/navigation"
 import { TaskItem } from '@/types';
+import { updateTaskService } from '@/services';
 
 interface DraggableProps {
   todoTasks: TaskItem[];
@@ -46,11 +47,7 @@ export function Draggable(props: DraggableProps) {
         }
 
         startTransition(async () => {
-          await fetch(`/api/tasks/${taskId}`, {
-            method: 'PUT',
-            body: JSON.stringify({ newState }),
-            headers: { 'Content-Type': 'application/json' },
-          });
+          await updateTaskService(taskId, newState);
           router.refresh();
         });
       },

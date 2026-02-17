@@ -4,7 +4,7 @@ import { Draggable } from '@/components'
 import { ProtectedRoute } from './ProtectedRoute'
 import type { TaskItem } from '@/types'
 
-interface MainPageContentProps {
+type MainPageContentProps = {
   todoTasks: TaskItem[]
   progressTasks: TaskItem[]
   doneTasks: TaskItem[]

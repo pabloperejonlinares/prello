@@ -1,8 +1,4 @@
-// Tema de Tailwind v4 — Paleta pastel elegante
-// https://tailwindcss.com/docs/configuration
-
 @theme {
-  // Colores pastel del tema
   --color-pastel-cream: #fefcf9;
   --color-pastel-lavender: #e8e4f3;
   --color-pastel-mint: #e0f2ed;
@@ -15,7 +11,6 @@
   --color-pastel-progress: #7dd3fc;
   --color-pastel-done: #6ee7b7;
 
-  // Gradientes
   --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
   --background-image-gradient-conic: conic-gradient(
     from 180deg at 50% 50%,

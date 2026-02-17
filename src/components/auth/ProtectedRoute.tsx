@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/providers/AuthContext'
 import { PanelSkeleton } from '@/components'
 
-interface ProtectedRouteProps {
+type ProtectedRouteProps = {
   children: ReactNode
   redirectTo?: string
 }
