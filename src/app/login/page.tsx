@@ -50,7 +50,7 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <Input
               label="Username"
-              placeholder="Username"
+              placeholder="Admin"
               value={username}
               onValueChange={setUsername}
               isRequired
@@ -59,7 +59,7 @@ export default function LoginPage() {
             />
             <Input
               label="Password"
-              placeholder="Password"
+              placeholder="1234"
               type="password"
               value={password}
               onValueChange={setPassword}
